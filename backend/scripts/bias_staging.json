@@ -1,0 +1,230 @@
+[
+  {
+    "instrument_id": 1,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 3,
+    "summary": "Gold remains elevated near $4,749-4,768, supported by a fragile US-Iran ceasefire expiring April 24 and hot March CPI (+3.3% YoY) limiting Fed rate cut potential. Weekly bullish bias aligns with daily; however, ceasefire optimism and a softer DXY (~98.70) create a cautious holding pattern. No major scheduled catalysts today (Saturday), but geopolitical tail risk remains the dominant driver.",
+    "key_drivers": "US-Iran ceasefire fragility, hot CPI (+3.3% YoY), DXY weakness (~98.70), Fed hawkish-hold stance, VIX at ~19.49 moderate risk-off, Islamabad Accord talks April 11",
+    "invalidation_notes": "Ceasefire confirmed as durable or extended beyond April 24 would trigger gold selloff; DXY recovery above 100.50 would pressure gold; surprise dovish Fed commentary could reduce safe-haven demand",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": 4.3,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "US-Iran 14-day ceasefire (announced April 7, expires April 24); Islamabad Accord talks underway; Strait of Hormuz partially blockaded; ceasefire fragile with Trump issuing new threats"
+    }
+  },
+  {
+    "instrument_id": 2,
+    "timeframe": "daily",
+    "bias": "bearish_bias",
+    "confidence": 3,
+    "summary": "WTI crude ~$95.63, down ~15% from pre-ceasefire highs of $112+ as war risk premium unwinds rapidly. Weekly bias likely was bearish on oil; ceasefire confirmation reinforces downside pressure. Key risk: ceasefire collapse (April 24 expiry) would violently reverse lower; EIA inventories 4% below 5yr average provides supply floor.",
+    "key_drivers": "US-Iran ceasefire oil risk premium unwinding, WTI down ~15% from $112 highs, EIA inventories below 5yr avg, OPEC+ cautious on accelerated supply increase, ceasefire expiry April 24",
+    "invalidation_notes": "Ceasefire breakdown or Iranian Strait of Hormuz blockade resumption would spike oil; OPEC+ emergency supply cut announcement; supply disruption headlines",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": 4.3,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "US-Iran ceasefire driving sharp oil selloff; WTI from $112 to ~$95; OPEC+ May 3 meeting key; Strait of Hormuz situation still unresolved"
+    }
+  },
+  {
+    "instrument_id": 3,
+    "timeframe": "daily",
+    "bias": "bullish",
+    "confidence": 3,
+    "summary": "EUR/USD is in a bullish trend with EUR briefly breaking above 1.2000 for the first time since 2021, supported by broad DXY weakness (~98.70, down 1%+ for week). ECB revised inflation higher, adopting a cautiously hawkish tone vs Fed hawkish-hold, supporting EUR. Hot US CPI data (already released April 10) is priced in; no new high-impact events today (Saturday).",
+    "key_drivers": "DXY weakness to ~98.70, ECB hawkish inflation revision, EUR/USD above 1.20 multi-year breakout, hot US CPI already priced in, no new catalysts today",
+    "invalidation_notes": "DXY recovery above 100 driven by risk-off or surprise Fed hawkishness; ECB dovish pivot or EU economic deterioration; US PPI (April 14) surprise to the upside",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": 4.3,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "Iran ceasefire easing energy inflation concerns; ECB revised 2026 inflation to 2.6% average"
+    }
+  },
+  {
+    "instrument_id": 4,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 3,
+    "summary": "GBP/USD in a bullish rally but approaching critical technical exhaustion levels per recent analysis. DXY weakness supports GBP; however, BOE expected to cut 25bp which limits GBP upside. Trend remains bullish while DXY stays weak below 99, but risk of mean reversion elevated. No data today (Saturday).",
+    "key_drivers": "DXY weakness, BOE expected 25bp cut (headwind for GBP), GBP/USD bullish trend momentum, technical exhaustion signals",
+    "invalidation_notes": "BOE cut confirmed sooner than expected; DXY recovery above 100; UK economic data deterioration; US PPI beat on April 14",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": 4.3,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  },
+  {
+    "instrument_id": 5,
+    "timeframe": "daily",
+    "bias": "bearish_bias",
+    "confidence": 3,
+    "summary": "USD/JPY bias is bearish on JPY strengthening expectations as BOJ maintains its gradual hike cycle (rates at 0.75%, 30yr high). However, next BOJ hike not expected until Oct 2026, limiting near-term JPY strength. DXY weakness adds downward pressure on USD/JPY. Pair expected to trade toward 146 by year end; weekly bearish bias aligns.",
+    "key_drivers": "BOJ at 0.75% (30yr high) with gradual hike cycle, DXY weakness to 98.70, US-JP yield spread narrowing, USD/JPY long-term target 146, policy divergence narrowing",
+    "invalidation_notes": "BOJ signals delay to 2027 for next hike; US yields spike sharply on hot PPI data (April 14); risk-off safe-haven USD demand surge",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": 4.3,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  },
+  {
+    "instrument_id": 6,
+    "timeframe": "daily",
+    "bias": "bearish_bias",
+    "confidence": 3,
+    "summary": "USD/CHF bearish on broad DXY weakness; CHF benefits from safe-haven flows given elevated geopolitical risk (Iran ceasefire fragility, VIX ~19). SNB has signaled willingness to intervene against rapid CHF appreciation, which caps CHF strength and limits downside on USD/CHF. Neutral-to-bearish bias; SNB intervention risk the key constraint.",
+    "key_drivers": "DXY weakness (~98.70), CHF safe-haven demand from Iran tensions, SNB FX intervention warning against excessive CHF appreciation, risk-off VIX ~19",
+    "invalidation_notes": "SNB actively intervenes in FX markets; Iran ceasefire becomes durable reducing safe-haven CHF demand; risk-on surge reduces CHF appeal",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "SNB signaled FX intervention against rapid CHF appreciation; safe-haven flows elevated on Iran tensions"
+    }
+  },
+  {
+    "instrument_id": 7,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 3,
+    "summary": "AUD/USD bullish on DXY weakness and commodity cycle support; end-2026 target revised to 0.73. Risk sentiment is neutral-to-improving on Iran ceasefire; lower oil prices reduce Australia's energy import costs. However, VIX ~19 and Michigan Sentiment crash to 46.1 signal consumer pessimism that could dampen risk-on flows. Weekly bullish bias aligns.",
+    "key_drivers": "DXY weakness, positive commodity cycle for AUD, Iran ceasefire improving risk appetite modestly, 2026 AUD/USD target 0.73, VIX ~19 caution",
+    "invalidation_notes": "China economic data deterioration; risk-off spike from ceasefire collapse; RBA dovish surprise; US PPI beat on April 14 driving DXY recovery",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "Iran ceasefire modestly risk-positive; China no major overnight data"
+    }
+  },
+  {
+    "instrument_id": 8,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 2,
+    "summary": "NZD/USD bullish on DXY weakness, but end-2026 target revised down to 0.61 (weaker than AUD/USD outlook). NZD benefits from positive export commodity cycle; however, RBNZ policy outlook is more dovish than RBA, limiting NZD upside relative to AUD. Michigan Sentiment crash to 46.1 is a global demand risk flag. Confidence lower due to weaker fundamental support vs AUD.",
+    "key_drivers": "DXY weakness, NZD commodity export support, RBNZ relatively dovish (headwind), end-2026 target 0.61 revised lower, risk-neutral environment",
+    "invalidation_notes": "RBNZ dovish surprise or rate cut signal; China demand concerns resurfacing; global risk-off triggered by ceasefire breakdown; US PPI beat April 14",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  },
+  {
+    "instrument_id": 9,
+    "timeframe": "daily",
+    "bias": "bearish_bias",
+    "confidence": 3,
+    "summary": "USD/CAD bearish on broad DXY weakness; however, the sharp drop in oil (~$95 WTI, from $112 highs) is negative for CAD as Canada is a major oil exporter, creating a crosscurrent. Net effect: DXY weakness dominates over oil CAD headwinds in the short term, keeping USD/CAD in a bearish-bias range. BOC commentary not flagged as major driver this week.",
+    "key_drivers": "DXY weakness (~98.70), WTI oil drop from $112 to ~$95 (negative for CAD partially offsetting DXY weakness), BOC holding pattern, ceasefire impact on oil",
+    "invalidation_notes": "Oil price further collapse below $85 would pressure CAD more heavily; DXY recovery; BOC dovish surprise; US PPI beat April 14",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": 19,
+      "fed_tone": "hawkish",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": "WTI oil declining on Iran ceasefire - headwind for CAD as oil exporter"
+    }
+  },
+  {
+    "instrument_id": 10,
+    "timeframe": "daily",
+    "bias": "neutral",
+    "confidence": 2,
+    "summary": "EUR/GBP is caught between two opposing forces: ECB adopting a cautiously hawkish stance with upward inflation revision vs BOE expected to cut 25bp, which is EUR-positive. However, EUR/USD strength above 1.20 and GBP's own DXY-weakness rally create offsetting dynamics within the cross. Net bias is neutral with slight EUR favor; no major catalyst today (Saturday).",
+    "key_drivers": "ECB hawkish inflation revision vs BOE expected rate cut, EUR/USD above 1.20 bullish, GBP rallying on DXY weakness, cross-rate competing forces",
+    "invalidation_notes": "ECB dovish surprise; BOE holds rates unexpectedly; UK economic data surprise to the upside this week",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": null,
+      "fed_tone": "unknown",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  },
+  {
+    "instrument_id": 11,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 3,
+    "summary": "EUR/JPY bullish: EUR strength (DXY weakness, ECB hawkish revision, EUR/USD above 1.20) combined with JPY weakness (BOJ next hike not until Oct 2026, policy divergence persists). This is a strong bullish confluence on the cross. Weekly bullish bias aligns; no high-impact catalysts today (Saturday).",
+    "key_drivers": "EUR strengthening on ECB hawkish revision and DXY weakness, JPY remains soft with BOJ next hike Oct 2026, EUR/USD above 1.20 macro bullish for EUR crosses",
+    "invalidation_notes": "BOJ accelerates hike timeline; ECB pivots dovish; risk-off surge boosting JPY safe-haven demand; ceasefire collapse triggering broad yen strength",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": null,
+      "fed_tone": "unknown",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  },
+  {
+    "instrument_id": 12,
+    "timeframe": "daily",
+    "bias": "bullish_bias",
+    "confidence": 3,
+    "summary": "GBP/JPY bullish: GBP benefiting from DXY weakness while JPY remains weak given BOJ's slow hike pace (next hike Oct 2026). Similar to EUR/JPY, the GBP/JPY cross should trend higher while both DXY weakness and BOJ policy divergence persist. BOE expected 25bp cut is a mild GBP headwind but insufficient to reverse the JPY weakness driver. Weekly bullish bias aligns.",
+    "key_drivers": "GBP strengthening on DXY weakness, JPY soft with BOJ next hike Oct 2026, policy divergence BOE vs BOJ supports higher cross, technical bullish trend",
+    "invalidation_notes": "BOJ emergency rate hike or hawkish commentary shifting Oct 2026 timeline forward; BOE surprise aggressive cut; risk-off flight-to-safety boosting JPY aggressively",
+    "valid_from": "2026-04-11T00:00:00+00:00",
+    "valid_until": "2026-04-11T23:59:59+00:00",
+    "macro": {
+      "dxy_trend": "down",
+      "real_yield_10y": null,
+      "vix_level": null,
+      "fed_tone": "unknown",
+      "risk_sentiment": "neutral",
+      "geopolitical_notes": null
+    }
+  }
+]
