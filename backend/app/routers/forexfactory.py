@@ -158,20 +158,28 @@ def _upsert_events(session: Session, events: List[dict]) -> int:
         return 0
 
     now = datetime.utcnow()
-    rows = [
-        {
-            "currency":   e["currency"],
-            "event_name": e["event"],
-            "date":       e["date"],
-            "time":       e["time"],
-            "impact":     e["impact"],
-            "actual":     e["actual"],
-            "forecast":   e["forecast"],
-            "previous":   e["previous"],
-            "fetched_at": now,
-        }
-        for e in to_store
-    ]
+
+    # Deduplicate by unique constraint key (currency, event_name, date)
+    seen = set()
+    rows = []
+    for e in to_store:
+        key = (e["currency"], e["event"], e["date"])
+        if key not in seen:
+            seen.add(key)
+            rows.append({
+                "currency":   e["currency"],
+                "event_name": e["event"],
+                "date":       e["date"],
+                "time":       e["time"],
+                "impact":     e["impact"],
+                "actual":     e["actual"],
+                "forecast":   e["forecast"],
+                "previous":   e["previous"],
+                "fetched_at": now,
+            })
+
+    if not rows:
+        return 0
 
     stmt = pg_insert(ForexFactoryEvent).values(rows)
     stmt = stmt.on_conflict_do_update(
