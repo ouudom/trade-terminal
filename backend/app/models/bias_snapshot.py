@@ -4,7 +4,7 @@ from enum import Enum
 import uuid
 
 from sqlmodel import SQLModel, Field, Column
-from sqlalchemy import Text, SmallInteger, UniqueConstraint
+from sqlalchemy import Text, SmallInteger, UniqueConstraint, text
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
 
@@ -29,7 +29,7 @@ class BiasSnapshot(SQLModel, table=True):
 
     id: Optional[uuid.UUID] = Field(
         default=None,
-        sa_column=Column(PG_UUID(as_uuid=True), primary_key=True, server_default="gen_random_uuid()"),
+        sa_column=Column(PG_UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")),
     )
     instrument_id: int = Field(foreign_key="instruments.id", nullable=False)
     timeframe: Timeframe = Field(nullable=False)

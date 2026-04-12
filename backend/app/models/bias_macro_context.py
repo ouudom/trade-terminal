@@ -6,7 +6,7 @@ import uuid
 
 from sqlmodel import SQLModel, Field, Column
 import sqlalchemy as sa
-from sqlalchemy import Text, SmallInteger, Numeric
+from sqlalchemy import Text, SmallInteger, Numeric, text
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
 
@@ -28,7 +28,7 @@ class BiasMacroContext(SQLModel, table=True):
 
     id: Optional[uuid.UUID] = Field(
         default=None,
-        sa_column=Column(PG_UUID(as_uuid=True), primary_key=True, server_default="gen_random_uuid()"),
+        sa_column=Column(PG_UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()")),
     )
     snapshot_id: uuid.UUID = Field(
         sa_column=Column(
