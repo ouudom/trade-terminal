@@ -7,6 +7,7 @@ from app.routers.news import router as news_router
 from app.routers.forexfactory import router as forexfactory_router
 from app.routers.mt5 import router as mt5_router
 from app.routers.bias import router as bias_router
+from app.routers.forex_charts import router as forex_charts_router
 
 
 @asynccontextmanager
@@ -32,6 +33,7 @@ api_router.include_router(news_router)
 api_router.include_router(forexfactory_router)
 api_router.include_router(mt5_router)
 api_router.include_router(bias_router)
+api_router.include_router(forex_charts_router)
 
 # Include all API routes under /api prefix
 app.include_router(api_router)

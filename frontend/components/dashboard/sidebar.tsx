@@ -10,6 +10,7 @@ import {
   Settings,
   Compass,
   CalendarDays,
+  BarChart2,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -20,6 +21,7 @@ const NAV_SECTIONS = [
       { label: "Portfolio",         href: "/dashboard/portfolio",         icon: PieChart },
       { label: "Markets",           href: "/dashboard/markets",           icon: TrendingUp },
       { label: "Fundamental Bias",  href: "/dashboard/fundamental-bias",  icon: Compass },
+      { label: "Forex Charts",      href: "/dashboard/forex-charts",      icon: BarChart2 },
       { label: "Orders",            href: "/dashboard/orders",            icon: ClipboardList },
     ],
   },
