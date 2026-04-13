@@ -1,17 +1,32 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, APIRouter
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
 from app.core.database import create_db_and_tables
-from app.routers.instruments import router as instruments_router
-from app.routers.news import router as news_router
-from app.routers.forexfactory import router as forexfactory_router
-from app.routers.mt5 import router as mt5_router
-from app.routers.bias import router as bias_router
-from app.routers.forex_charts import router as forex_charts_router
+from app.core.exceptions import (
+    AppValidationError,
+    ExternalServiceError,
+    MT5ConnectionError,
+    MT5OrderError,
+    NotFoundError,
+)
+from app.core.logging import RequestLoggingMiddleware, configure_logging
+
+from app.api.v1 import (
+    instruments,
+    bias,
+    forexfactory,
+    news,
+    forex_charts,
+    mt5,
+)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    configure_logging()
     create_db_and_tables()
     yield
 
@@ -25,17 +40,48 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(RequestLoggingMiddleware)
 
-# Create API router with /api prefix
+
+# ── Exception handlers ────────────────────────────────────────────────────────
+
+@app.exception_handler(NotFoundError)
+async def not_found_handler(request, exc: NotFoundError):
+    return JSONResponse(status_code=404, content={"detail": str(exc)})
+
+
+@app.exception_handler(AppValidationError)
+async def validation_handler(request, exc: AppValidationError):
+    return JSONResponse(status_code=422, content={"detail": str(exc)})
+
+
+@app.exception_handler(MT5ConnectionError)
+async def mt5_conn_handler(request, exc: MT5ConnectionError):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(MT5OrderError)
+async def mt5_order_handler(request, exc: MT5OrderError):
+    return JSONResponse(status_code=422, content={"detail": str(exc)})
+
+
+@app.exception_handler(ExternalServiceError)
+async def ext_svc_handler(request, exc: ExternalServiceError):
+    return JSONResponse(status_code=502, content={"detail": str(exc)})
+
+
+# ── Routers ───────────────────────────────────────────────────────────────────
+
+from fastapi import APIRouter
+
 api_router = APIRouter(prefix="/api")
-api_router.include_router(instruments_router)
-api_router.include_router(news_router)
-api_router.include_router(forexfactory_router)
-api_router.include_router(mt5_router)
-api_router.include_router(bias_router)
-api_router.include_router(forex_charts_router)
+api_router.include_router(instruments.router)
+api_router.include_router(bias.router)
+api_router.include_router(forexfactory.router)
+api_router.include_router(news.router)
+api_router.include_router(forex_charts.router)
+api_router.include_router(mt5.router)
 
-# Include all API routes under /api prefix
 app.include_router(api_router)
 
 
