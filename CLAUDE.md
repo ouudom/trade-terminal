@@ -15,10 +15,16 @@
 
 - NEVER save to root folder — use the directories below
 - Use `backend/app/` for Python/FastAPI source code
+- Use `backend/app/api/v1/` for API route handlers (one file per domain)
+- Use `backend/app/core/` for config, database, dependencies, exceptions, logging
+- Use `backend/app/models/` for SQLModel ORM models
+- Use `backend/app/schemas/` for Pydantic request/response schemas
+- Use `backend/app/services/` for business logic services
+- Use `backend/app/repositories/` for database query layer
 - Use `frontend/app/` for Next.js pages and layouts
 - Use `frontend/components/` for React components
-- Use `backend/scripts/` for backend utility scripts
-- Use `backend/alembic/` for database migrations
+- Use `backend/scripts/` for backend utility scripts (seeding, staging data)
+- Use `backend/alembic/versions/` for database migrations
 - Use `/docs` for documentation and markdown files
 
 ## Project Architecture
@@ -29,6 +35,34 @@
 - Prefer TDD London School (mock-first) for new code
 - Use event sourcing for state changes
 - Ensure input validation at system boundaries
+
+### Backend Architecture (FastAPI + SQLModel + PostgreSQL)
+
+Layered architecture: `api/v1/` → `services/` → `repositories/` → `models/`
+
+**API domains** (all under `/api/v1/`):
+| Route prefix | File | Description |
+|---|---|---|
+| `/instruments` | `instruments.py` | Trading instrument list |
+| `/bias` | `bias.py` | Fundamental bias snapshots |
+| `/forexfactory` | `forexfactory.py` | ForexFactory calendar events |
+| `/news` | `news.py` | News feed |
+| `/forex-charts` | `forex_charts.py` | Chart data via yfinance |
+| `/mt5` | `mt5.py` | MT5 bridge (positions, orders, account) |
+
+**Core modules** (`app/core/`):
+- `config.py` — pydantic-settings `Settings` class; reads from `backend/.env`
+- `database.py` — SQLModel engine + `get_session()` dependency
+- `dependencies.py` — FastAPI dependency injection factories for services
+- `exceptions.py` — `NotFoundError`, `AppValidationError`, `MT5ConnectionError`, `MT5OrderError`, `ExternalServiceError`
+- `logging.py` — `RequestLoggingMiddleware` + `configure_logging()`
+
+**MT5 integration**: connects via `mt5linux` socket to a Wine-hosted MT5 terminal at `MT5_HOST:MT5_PORT`
+
+**Database migrations** (3 existing):
+- `0001` — fundamental_bias schema
+- `0002` — forexfactory_events
+- `0003` — new bias schema (current)
 
 ### Project Config
 
@@ -49,9 +83,18 @@ cd frontend && npm run dev     # Dev server
 
 ### Backend (FastAPI/Python — run from `backend/`)
 ```bash
-cd backend && uvicorn app.main:app --reload   # Dev server
+cd backend && uvicorn app.main:app --reload   # Dev server (uses .venv)
 cd backend && python -m pytest                # Tests (if added)
+cd backend && alembic upgrade head            # Apply migrations
 ```
+
+**Key dependencies**: FastAPI, SQLModel, PostgreSQL (psycopg2), Alembic, Pydantic-settings, httpx, BeautifulSoup4, mt5linux, yfinance
+
+**Environment variables required** (in `backend/.env`):
+- `DATABASE_URL` — PostgreSQL connection string
+- `NEWS_API_KEY` — news API key
+- `MT5_HOST`, `MT5_PORT` — MT5 bridge socket server (default: 127.0.0.1:18812)
+- `MT5_LOGIN`, `MT5_PASSWORD`, `MT5_SERVER` — MT5 demo account credentials (optional)
 
 - ALWAYS run tests after making code changes
 - ALWAYS verify build succeeds before committing
