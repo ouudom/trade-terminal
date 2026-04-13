@@ -1,74 +1,4 @@
-// ─── Interfaces ───────────────────────────────────────────────────────────────
-
-export type BiasDirection = "bullish" | "bearish" | "neutral"
-
-export interface FundamentalBiasEntry {
-  symbol: string
-  name: string
-  changePct: number
-  direction: BiasDirection
-  confidence: number
-  lastUpdate: string
-  analysis: string
-  bullets: string[]
-}
-
-export interface OverallSentiment {
-  label: string
-  direction: BiasDirection
-  confidenceIndex: number
-  lastUpdate: string
-}
-
-
-
-export interface Asset {
-  symbol: string
-  name: string
-  price: number
-  change: number
-  changePct: number
-  sparkline: number[]
-}
-
-export interface PortfolioMetric {
-  label: string
-  value: string
-  change?: string
-  changePct?: number
-  positive?: boolean
-}
-
-export interface Candle {
-  timestamp: number
-  open: number
-  high: number
-  low: number
-  close: number
-  volume: number
-}
-
-export type OrderSide = "BUY" | "SELL"
-export type OrderStatus = "FILLED" | "PARTIAL" | "OPEN" | "CANCELLED"
-
-export interface Order {
-  id: string
-  asset: string
-  side: OrderSide
-  qty: number
-  price: number
-  status: OrderStatus
-  timestamp: string
-}
-
-export interface Position {
-  asset: string
-  qty: number
-  entryPrice: number
-  currentPrice: number
-  pnl: number
-  pnlPct: number
-}
+import type { Asset, PortfolioMetric, Candle, Order, Position, OverallSentiment, FundamentalBiasEntry } from "@/lib/types"
 
 // ─── Watchlist ─────────────────────────────────────────────────────────────────
 
@@ -170,11 +100,11 @@ export const MOCK_PORTFOLIO_METRICS: PortfolioMetric[] = [
   },
 ]
 
-// ─── Candles (60 x 1-min OHLCV around $189) ──────────────────────────────────
+// ─── Candles ──────────────────────────────────────────────────────────────────
 
 function generateCandles(): Candle[] {
   const candles: Candle[] = []
-  const baseTime = Date.now() - 60 * 60 * 1000 // 1 hour ago
+  const baseTime = Date.now() - 60 * 60 * 1000
   let price = 187.50
 
   for (let i = 0; i < 60; i++) {
@@ -186,15 +116,7 @@ function generateCandles(): Candle[] {
     const low = parseFloat((Math.min(open, close) - Math.random() * 0.6).toFixed(2))
     const volume = Math.floor(80000 + Math.random() * 420000)
 
-    candles.push({
-      timestamp: baseTime + i * 60 * 1000,
-      open,
-      high,
-      low,
-      close,
-      volume,
-    })
-
+    candles.push({ timestamp: baseTime + i * 60 * 1000, open, high, low, close, volume })
     price = close
   }
 
@@ -206,17 +128,24 @@ export const MOCK_CANDLES: Candle[] = generateCandles()
 // ─── Orders ───────────────────────────────────────────────────────────────────
 
 export const MOCK_ORDERS: Order[] = [
-  { id: "o1", asset: "AAPL",  side: "BUY",  qty: 50,   price: 187.20, status: "FILLED",    timestamp: "14:32:01" },
-  { id: "o2", asset: "NVDA",  side: "BUY",  qty: 10,   price: 862.50, status: "FILLED",    timestamp: "14:28:47" },
-  { id: "o3", asset: "TSLA",  side: "SELL", qty: 25,   price: 175.80, status: "FILLED",    timestamp: "14:21:15" },
-  { id: "o4", asset: "META",  side: "SELL", qty: 15,   price: 532.00, status: "PARTIAL",   timestamp: "14:18:30" },
-  { id: "o5", asset: "MSFT",  side: "BUY",  qty: 20,   price: 414.00, status: "OPEN",      timestamp: "14:15:02" },
-  { id: "o6", asset: "AMZN",  side: "BUY",  qty: 30,   price: 197.50, status: "FILLED",    timestamp: "14:10:44" },
+  { id: "o1", asset: "AAPL",  side: "BUY",  qty: 50,   price: 187.20,   status: "FILLED",    timestamp: "14:32:01" },
+  { id: "o2", asset: "NVDA",  side: "BUY",  qty: 10,   price: 862.50,   status: "FILLED",    timestamp: "14:28:47" },
+  { id: "o3", asset: "TSLA",  side: "SELL", qty: 25,   price: 175.80,   status: "FILLED",    timestamp: "14:21:15" },
+  { id: "o4", asset: "META",  side: "SELL", qty: 15,   price: 532.00,   status: "PARTIAL",   timestamp: "14:18:30" },
+  { id: "o5", asset: "MSFT",  side: "BUY",  qty: 20,   price: 414.00,   status: "OPEN",      timestamp: "14:15:02" },
+  { id: "o6", asset: "AMZN",  side: "BUY",  qty: 30,   price: 197.50,   status: "FILLED",    timestamp: "14:10:44" },
   { id: "o7", asset: "BTC",   side: "BUY",  qty: 0.5,  price: 67200.00, status: "CANCELLED", timestamp: "13:58:11" },
-  { id: "o8", asset: "ETH",   side: "SELL", qty: 2,    price: 3560.00, status: "FILLED",   timestamp: "13:45:28" },
+  { id: "o8", asset: "ETH",   side: "SELL", qty: 2,    price: 3560.00,  status: "FILLED",    timestamp: "13:45:28" },
 ]
 
 // ─── Positions ────────────────────────────────────────────────────────────────
+
+export const MOCK_POSITIONS: Position[] = [
+  { asset: "AAPL", qty: 150, entryPrice: 174.80, currentPrice: 189.43, pnl: 2194.50,  pnlPct: 8.37  },
+  { asset: "NVDA", qty: 20,  entryPrice: 620.00, currentPrice: 875.32, pnl: 5106.40,  pnlPct: 41.18 },
+  { asset: "TSLA", qty: 40,  entryPrice: 185.30, currentPrice: 172.18, pnl: -524.80,  pnlPct: -7.08 },
+  { asset: "MSFT", qty: 35,  entryPrice: 398.50, currentPrice: 415.60, pnl: 598.50,   pnlPct: 4.29  },
+]
 
 // ─── Fundamental Bias ─────────────────────────────────────────────────────────
 
@@ -311,42 +240,5 @@ export const MOCK_FUNDAMENTAL_BIAS: FundamentalBiasEntry[] = [
       "Defensive rotation into utilities and consumer staples signals risk-off without full bearish commitment.",
       "Elevated rate expectations continue to pressure rate-sensitive components, capping index upside.",
     ],
-  },
-]
-
-// ─── Positions ────────────────────────────────────────────────────────────────
-
-export const MOCK_POSITIONS: Position[] = [
-  {
-    asset: "AAPL",
-    qty: 150,
-    entryPrice: 174.80,
-    currentPrice: 189.43,
-    pnl: 2194.50,
-    pnlPct: 8.37,
-  },
-  {
-    asset: "NVDA",
-    qty: 20,
-    entryPrice: 620.00,
-    currentPrice: 875.32,
-    pnl: 5106.40,
-    pnlPct: 41.18,
-  },
-  {
-    asset: "TSLA",
-    qty: 40,
-    entryPrice: 185.30,
-    currentPrice: 172.18,
-    pnl: -524.80,
-    pnlPct: -7.08,
-  },
-  {
-    asset: "MSFT",
-    qty: 35,
-    entryPrice: 398.50,
-    currentPrice: 415.60,
-    pnl: 598.50,
-    pnlPct: 4.29,
   },
 ]
