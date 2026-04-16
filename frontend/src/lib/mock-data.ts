@@ -1,4 +1,4 @@
-import type { Asset, PortfolioMetric, Candle, Order, Position, OverallSentiment, FundamentalBiasEntry } from "@/lib/types"
+import type { Asset, PortfolioMetric, Order, Position, OverallSentiment, FundamentalBiasEntry } from "@/lib/types"
 
 // ─── Watchlist ─────────────────────────────────────────────────────────────────
 
@@ -99,31 +99,6 @@ export const MOCK_PORTFOLIO_METRICS: PortfolioMetric[] = [
     positive: undefined,
   },
 ]
-
-// ─── Candles ──────────────────────────────────────────────────────────────────
-
-function generateCandles(): Candle[] {
-  const candles: Candle[] = []
-  const baseTime = Date.now() - 60 * 60 * 1000
-  let price = 187.50
-
-  for (let i = 0; i < 60; i++) {
-    const direction = Math.random() > 0.48 ? 1 : -1
-    const move = Math.random() * 1.2
-    const open = price
-    const close = parseFloat((price + direction * move).toFixed(2))
-    const high = parseFloat((Math.max(open, close) + Math.random() * 0.6).toFixed(2))
-    const low = parseFloat((Math.min(open, close) - Math.random() * 0.6).toFixed(2))
-    const volume = Math.floor(80000 + Math.random() * 420000)
-
-    candles.push({ timestamp: baseTime + i * 60 * 1000, open, high, low, close, volume })
-    price = close
-  }
-
-  return candles
-}
-
-export const MOCK_CANDLES: Candle[] = generateCandles()
 
 // ─── Orders ───────────────────────────────────────────────────────────────────
 

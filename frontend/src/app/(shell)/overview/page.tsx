@@ -1,11 +1,9 @@
 import { PortfolioCards } from "@/components/features/overview/portfolio-cards"
-import { MarketChart } from "@/components/features/forex-charts/market-chart"
 import { Watchlist } from "@/components/features/overview/watchlist"
 import { OrdersTable } from "@/components/features/overview/orders-table"
 import { PositionsPanel } from "@/components/features/overview/positions-panel"
 import {
   MOCK_PORTFOLIO_METRICS,
-  MOCK_CANDLES,
   MOCK_WATCHLIST,
   MOCK_ORDERS,
   MOCK_POSITIONS,
@@ -19,9 +17,8 @@ export default function OverviewPage() {
 
       {/* Main content: 60/40 split */}
       <div className="flex min-h-0 flex-1 gap-3">
-        {/* Left column — chart + watchlist */}
+        {/* Left column — watchlist */}
         <div className="flex min-w-0 flex-col gap-3" style={{ flex: 3 }}>
-          <MarketChart candles={MOCK_CANDLES} symbol="AAPL" />
           <Watchlist assets={MOCK_WATCHLIST} />
         </div>
 

@@ -6,7 +6,6 @@ import {
   ClipboardList,
   Settings,
   Compass,
-  CalendarDays,
   BarChart2,
   SlidersHorizontal,
   Database,
@@ -31,14 +30,7 @@ export const DASHBOARD_NAV: NavSection[] = [
       { label: "Portfolio",         href: "/portfolio",        icon: PieChart },
       { label: "Markets",           href: "/markets",          icon: TrendingUp },
       { label: "Fundamental Bias",  href: "/fundamental-bias", icon: Compass },
-      { label: "Forex Charts",      href: "/forex-charts",     icon: BarChart2 },
       { label: "Orders",            href: "/orders",           icon: ClipboardList },
-    ],
-  },
-  {
-    label: "Data",
-    items: [
-      { label: "ForexFactory Events", href: "/forex-events", icon: CalendarDays },
     ],
   },
   {

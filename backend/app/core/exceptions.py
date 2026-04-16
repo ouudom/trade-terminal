@@ -26,13 +26,3 @@ class ExternalServiceError(TradeTerminalError):
         super().__init__(f"{service} error: {detail}")
 
 
-class MT5ConnectionError(ExternalServiceError):
-    """MT5 terminal is not reachable or login failed."""
-
-
-class MT5OrderError(ExternalServiceError):
-    """MT5 rejected or failed an order operation."""
-
-
-class ScrapingError(ExternalServiceError):
-    """HTML scraping returned an unexpected or empty structure."""
