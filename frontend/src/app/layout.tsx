@@ -22,6 +22,7 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: "Trade Terminal",
   description: "Trade Empire",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({
