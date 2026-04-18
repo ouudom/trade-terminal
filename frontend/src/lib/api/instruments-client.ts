@@ -10,10 +10,10 @@ export interface Instrument {
 
 export class InstrumentsApiClient extends BaseApiClient {
   list(): Promise<Instrument[]> {
-    return this.get<Instrument[]>("/instruments")
+    return this.get<Instrument[]>("/api/instruments")
   }
 
   update(id: number, payload: Partial<Instrument>): Promise<Instrument> {
-    return this.put<Instrument>(`/instruments/${id}`, payload)
+    return this.put<Instrument>(`/api/instruments/${id}`, payload)
   }
 }

@@ -1,11 +1,10 @@
 from typing import Any, Optional
 from datetime import date as Date, datetime
-from decimal import Decimal
 import uuid
 
 import sqlalchemy as sa
 from sqlmodel import SQLModel, Field, Column
-from sqlalchemy import Date as SADate, Numeric, Text, UniqueConstraint, text
+from sqlalchemy import Date as SADate, Text, UniqueConstraint, text
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID, JSONB
 
 
@@ -22,36 +21,25 @@ class WeeklyForecast(SQLModel, table=True):
     instrument_id: int = Field(
         sa_column=Column(sa.Integer, sa.ForeignKey("instruments.id", ondelete="CASCADE"), nullable=False)
     )
+    instrument: str = Field(max_length=20, nullable=False)
     week_of: Optional[Date] = Field(default=None, sa_column=Column(SADate, nullable=False))
     generated_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
     generated_by: str = Field(max_length=50, default="claude", nullable=False)
 
-    # Technical
-    technical_bias: Optional[str] = Field(default=None, max_length=10)
-    technical_ai_analysis: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    technical_key_drivers: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
-    technical_invalidation: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    key_zone_high: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 4), nullable=True))
-    key_zone_low: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 4), nullable=True))
-    invalidation_level: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 4), nullable=True))
-    trend_structure: Optional[str] = Field(default=None, max_length=20)
-    premium_discount: Optional[str] = Field(default=None, max_length=15)
-    weekly_high: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 4), nullable=True))
-    weekly_low: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 4), nullable=True))
+    # Stored as JSONB for complex nested structures
+    technical: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    fundamental: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    sentimental: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    confluence: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
 
-    # Sentimental
-    sentiment_bias: Optional[str] = Field(default=None, max_length=10)
-    sentiment_ai_analysis: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    sentiment_key_drivers: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
-    sentiment_invalidation: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    retail_long_pct: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(5, 2), nullable=True))
-    retail_short_pct: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(5, 2), nullable=True))
-    cot_net_position: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 0), nullable=True))
-    cot_change_week: Optional[Decimal] = Field(default=None, sa_column=Column(Numeric(12, 0), nullable=True))
-
-    # Composite
+    # Overall
     overall_bias: Optional[str] = Field(default=None, max_length=10)
+    overall_ai_analysis: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
+    overall_key_drivers: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    overall_bias_invalidation_reasons: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    overall_setup_scenarios: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
     confidence: Optional[str] = Field(default=None, max_length=10)
+    correlation_warning: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
     high_impact_events: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
 
 
@@ -76,17 +64,18 @@ class DailyValidation(SQLModel, table=True):
     instrument_id: int = Field(
         sa_column=Column(sa.Integer, sa.ForeignKey("instruments.id", ondelete="CASCADE"), nullable=False)
     )
+    instrument: str = Field(max_length=20, nullable=False)
     validation_date: Optional[Date] = Field(
         default=None,
         sa_column=Column("date", SADate, nullable=False),
     )
     validated_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)
-
-    status: str = Field(max_length=15, nullable=False)
-    bias_still_intact: Optional[bool] = Field(default=None)
-    price_respecting_zone: Optional[bool] = Field(default=None)
-    news_risk: Optional[bool] = Field(default=None)
-    structural_shift: Optional[bool] = Field(default=None)
-    notes: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    ai_review: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))
-    invalidation_triggered: bool = Field(default=False, nullable=False)
+    session: Optional[str] = Field(default=None, max_length=20)
+    price_at_zone: Optional[bool] = Field(default=None)
+    weekly_bias_intact: Optional[bool] = Field(default=None)
+    overnight_news_invalidation: Optional[bool] = Field(default=None)
+    entry_trigger: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    tp_path_clear: Optional[bool] = Field(default=None)
+    tp_path_blockers: Optional[Any] = Field(default=None, sa_column=Column(JSONB, nullable=True))
+    output: Optional[str] = Field(default=None, max_length=20)
+    output_reason: Optional[str] = Field(default=None, sa_column=Column(Text, nullable=True))

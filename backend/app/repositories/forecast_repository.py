@@ -36,12 +36,11 @@ class ForecastRepository:
 
     def get_week(
         self, week_of: date, instrument_id: int | None = None
-    ) -> list[tuple[WeeklyForecast, Instrument]]:
+    ) -> list[WeeklyForecast]:
         stmt = (
-            select(WeeklyForecast, Instrument)
-            .join(Instrument, Instrument.id == WeeklyForecast.instrument_id)
+            select(WeeklyForecast)
             .where(WeeklyForecast.week_of == week_of)
-            .order_by(Instrument.symbol)
+            .order_by(WeeklyForecast.instrument)
         )
         if instrument_id is not None:
             stmt = stmt.where(WeeklyForecast.instrument_id == instrument_id)
@@ -67,12 +66,11 @@ class ForecastRepository:
 
     def get_daily(
         self, validation_date: date
-    ) -> list[tuple[DailyValidation, Instrument]]:
+    ) -> list[DailyValidation]:
         return self._session.exec(
-            select(DailyValidation, Instrument)
-            .join(Instrument, Instrument.id == DailyValidation.instrument_id)
+            select(DailyValidation)
             .where(DailyValidation.validation_date == validation_date)
-            .order_by(Instrument.symbol)
+            .order_by(DailyValidation.instrument)
         ).all()
 
     # ── Persistence ────────────────────────────────────────────────────────────
