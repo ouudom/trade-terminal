@@ -125,11 +125,6 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
             <div className="font-mono text-sm font-bold tracking-tight text-foreground leading-none">
               {row.instrument}
             </div>
-            {tech?.trend_structure && (
-              <div className="font-mono text-[9px] text-muted-foreground/35 mt-[3px] leading-none">
-                {tech.trend_structure.weekly} / {tech.trend_structure.daily} / {tech.trend_structure.h4}
-              </div>
-            )}
           </div>
 
           <div className="w-20 shrink-0">
@@ -138,21 +133,6 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
 
           <div className="w-14 shrink-0">
             <ConfidenceBadge level={row.confidence} />
-          </div>
-
-          <div className="flex items-center gap-2 w-36 shrink-0">
-            <div className="flex items-center gap-1">
-              <span className="font-mono text-[8px] text-muted-foreground/30 tracking-wider">T</span>
-              <BiasBadge bias={tech?.bias} size="xs" />
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="font-mono text-[8px] text-muted-foreground/30 tracking-wider">S</span>
-              <BiasBadge bias={sent?.bias} size="xs" />
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="font-mono text-[8px] text-muted-foreground/30 tracking-wider">F</span>
-              <BiasBadge bias={fund?.bias} size="xs" />
-            </div>
           </div>
 
           <p className="flex-1 font-mono text-[11px] text-muted-foreground/50 leading-relaxed truncate hidden sm:block">
@@ -172,6 +152,50 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
       {/* Expanded panel */}
       {open && (
         <div className="pl-14 pr-5 pb-5 border-t border-surface-border/60">
+          {/* Trend Structure */}
+          {tech?.trend_structure && (
+            <div className="pt-4 pb-4 border-b border-surface-border/60">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35 mb-2">
+                Trend Structure
+              </p>
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] text-muted-foreground/50">Weekly:</span>
+                  <span className="font-mono font-semibold text-foreground">{tech.trend_structure.weekly}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] text-muted-foreground/50">Daily:</span>
+                  <span className="font-mono font-semibold text-foreground">{tech.trend_structure.daily}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] text-muted-foreground/50">4H:</span>
+                  <span className="font-mono font-semibold text-foreground">{tech.trend_structure.h4}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Section Biases */}
+          <div className="pt-4 pb-4 border-b border-surface-border/60">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35 mb-3">
+              Analysis Breakdown
+            </p>
+            <div className="flex items-center gap-6">
+              <div className="flex flex-col gap-1.5">
+                <span className="font-mono text-[9px] text-muted-foreground/50">Technical</span>
+                <BiasBadge bias={tech?.bias ?? null} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="font-mono text-[9px] text-muted-foreground/50">Sentimental</span>
+                <BiasBadge bias={sent?.bias ?? null} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="font-mono text-[9px] text-muted-foreground/50">Fundamental</span>
+                <BiasBadge bias={fund?.bias ?? null} />
+              </div>
+            </div>
+          </div>
+
           <div className="pt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             {/* Technical */}
@@ -459,9 +483,6 @@ export function WeeklyForecastDashboard({ rows, weekOf }: WeeklyForecastDashboar
         <span className="w-14 shrink-0 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/30">
           Conf
         </span>
-        <span className="w-36 shrink-0 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/30">
-          T / S / F
-        </span>
         <span className="flex-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/30 hidden sm:block">
           Analysis
         </span>
@@ -479,7 +500,14 @@ export function WeeklyForecastDashboard({ rows, weekOf }: WeeklyForecastDashboar
             </span>
           </div>
         ) : (
-          rows.map((row, i) => <InstrumentRow key={row.id} row={row} index={i} />)
+          rows
+            .sort((a, b) => {
+              const confidenceOrder: Record<string, number> = { HIGH: 0, MEDIUM: 1, LOW: 2 }
+              const aConf = confidenceOrder[a.confidence ?? ""] ?? 3
+              const bConf = confidenceOrder[b.confidence ?? ""] ?? 3
+              return aConf - bConf
+            })
+            .map((row, i) => <InstrumentRow key={row.id} row={row} index={i} />)
         )}
       </div>
     </div>
