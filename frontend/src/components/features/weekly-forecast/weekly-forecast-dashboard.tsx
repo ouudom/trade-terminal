@@ -196,6 +196,14 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
             </div>
           </div>
 
+          {/* Correlation Warning */}
+          {row.correlation_warning && (
+            <div className="pt-4 pb-3 rounded-md border border-loss/20 bg-loss/5 px-3 py-2.5">
+              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-loss/70 mb-1">Correlation Warning</p>
+              <p className="text-xs text-loss/60">{row.correlation_warning}</p>
+            </div>
+          )}
+
           <div className="pt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             {/* Technical */}
@@ -265,6 +273,85 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
                   </div>
                 )}
 
+                {tech.support_resistance_levels && tech.support_resistance_levels.length > 0 && (
+                  <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30 mb-1.5">
+                      Support/Resistance
+                    </p>
+                    <ul className="space-y-1">
+                      {tech.support_resistance_levels.map((sr, i) => (
+                        <li key={i} className="flex items-center justify-between text-xs text-muted-foreground/70 rounded-sm border border-surface-border bg-surface-2 px-2 py-1">
+                          <span className="font-mono font-semibold">
+                            {sr.type === "support" ? "↗" : "↘"} {sr.level.toFixed(4)}
+                          </span>
+                          <span className="font-mono text-[8px] text-muted-foreground/50 capitalize">{sr.strength}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {tech.order_flow && (
+                  <div className="space-y-2">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30">Order Flow</p>
+                    {tech.order_flow.data_quality && (
+                      <div className="text-[9px] text-muted-foreground/60">
+                        <span className="font-mono">Quality:</span> {tech.order_flow.data_quality}
+                      </div>
+                    )}
+                    {tech.order_flow.volume_profile && (
+                      <div className="rounded-sm border border-surface-border bg-surface-2 px-2 py-1.5">
+                        <div className="font-mono text-[9px] text-muted-foreground/50 mb-1">Volume Profile</div>
+                        {tech.order_flow.volume_profile.poc && (
+                          <div className="text-[9px] text-muted-foreground/70">POC: {tech.order_flow.volume_profile.poc.toFixed(4)}</div>
+                        )}
+                        {tech.order_flow.volume_profile.vah && (
+                          <div className="text-[9px] text-muted-foreground/70">VAH: {tech.order_flow.volume_profile.vah.toFixed(4)}</div>
+                        )}
+                        {tech.order_flow.volume_profile.val && (
+                          <div className="text-[9px] text-muted-foreground/70">VAL: {tech.order_flow.volume_profile.val.toFixed(4)}</div>
+                        )}
+                        {tech.order_flow.volume_profile.price_vs_value_area && (
+                          <div className="text-[9px] text-muted-foreground/70 mt-1">{tech.order_flow.volume_profile.price_vs_value_area}</div>
+                        )}
+                      </div>
+                    )}
+                    {tech.order_flow.cumulative_delta_4h && (
+                      <div className="text-[9px] text-muted-foreground/70">
+                        <span className="font-mono">Cumulative Delta (4H):</span> {tech.order_flow.cumulative_delta_4h}
+                      </div>
+                    )}
+                    {tech.order_flow.delta_at_key_zone && (
+                      <div className="text-[9px] text-muted-foreground/70">
+                        <span className="font-mono">Delta at Key Zone:</span> {tech.order_flow.delta_at_key_zone}
+                      </div>
+                    )}
+                    {tech.order_flow.liquidity_sweeps && tech.order_flow.liquidity_sweeps.length > 0 && (
+                      <div className="text-[9px]">
+                        <div className="font-mono text-muted-foreground/50 mb-1">Liquidity Sweeps:</div>
+                        {tech.order_flow.liquidity_sweeps.map((ls, i) => (
+                          <div key={i} className="text-muted-foreground/70">
+                            {ls.side}: {ls.level.toFixed(4)} {ls.swept ? "✓" : "○"}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {tech.order_flow.imbalances && tech.order_flow.imbalances.length > 0 && (
+                      <div className="text-[9px]">
+                        <div className="font-mono text-muted-foreground/50 mb-1">Imbalances:</div>
+                        {tech.order_flow.imbalances.map((imb, i) => (
+                          <div key={i} className="text-muted-foreground/70">
+                            {imb.type} @ {imb.price.toFixed(4)} ({imb.timeframe})
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {tech.order_flow.summary && (
+                      <p className="text-[9px] text-muted-foreground/70 mt-1">{tech.order_flow.summary}</p>
+                    )}
+                  </div>
+                )}
+
                 {tech.invalidation && (
                   <p className="font-mono text-[10px] text-loss/50 leading-relaxed">
                     ⚠ {tech.invalidation}
@@ -273,70 +360,296 @@ function InstrumentRow({ row, index }: { row: WeeklyForecastRow; index: number }
               </div>
             )}
 
-            {/* Sentimental */}
-            {sent && (
+            {/* Fundamental */}
+            {fund && (
               <div className="space-y-3">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35">
-                  Sentimental Analysis
+                  Fundamental Analysis
                 </p>
-                {sent.ai_analysis && (
-                  <p className="text-sm text-muted-foreground leading-relaxed">{sent.ai_analysis}</p>
+                {fund.ai_analysis && (
+                  <p className="text-sm text-muted-foreground leading-relaxed">{fund.ai_analysis}</p>
                 )}
 
-                {(sent.retail_long_pct != null || sent.cot_net_position != null) && (
-                  <div className="rounded-md border border-surface-border bg-surface-2 px-3 py-2.5 space-y-2">
-                    {sent.retail_long_pct != null && sent.retail_short_pct != null && (
-                      <div className="space-y-1">
-                        <div className="flex justify-between font-mono text-[9px] text-muted-foreground/40">
-                          <span>Retail Long {sent.retail_extreme && "⚠️"}</span>
-                          <span className="text-profit">{sent.retail_long_pct.toFixed(1)}%</span>
-                        </div>
-                        <div className="flex h-[3px] w-full overflow-hidden rounded-full bg-surface-3">
-                          <div className="bg-profit h-full" style={{ width: `${sent.retail_long_pct}%` }} />
-                          <div className="bg-loss h-full" style={{ width: `${sent.retail_short_pct}%` }} />
-                        </div>
-                        <div className="flex justify-between font-mono text-[9px] text-muted-foreground/40">
-                          <span>Retail Short</span>
-                          <span className="text-loss">{sent.retail_short_pct.toFixed(1)}%</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {sent.cot_net_position != null && (
-                      <div className="flex items-center justify-between border-t border-surface-border pt-2">
-                        <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">COT Net</span>
-                        <span className="font-mono text-xs tabular-nums text-foreground/70">
-                          {sent.cot_net_position.toLocaleString()}
-                        </span>
-                      </div>
-                    )}
-
-                    {sent.cot_change_week != null && (
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">
-                          COT Δ {sent.cot_trend_weeks ? `(${sent.cot_trend_weeks}w)` : ""}
-                        </span>
-                        <COTChange change={sent.cot_change_week} />
-                      </div>
-                    )}
-
-                    {sent.smart_money_vs_retail && (
-                      <div className="flex items-center justify-between border-t border-surface-border pt-2">
-                        <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">Smart Money</span>
-                        <span className="font-mono text-[8px] text-muted-foreground/60">{sent.smart_money_vs_retail}</span>
-                      </div>
-                    )}
+                {fund.dxy_bias && (
+                  <div className="rounded-md border border-surface-border bg-surface-2 px-3 py-2.5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/35">
+                        DXY Bias
+                      </span>
+                      <BiasBadge bias={fund.dxy_bias as any} size="xs" />
+                    </div>
                   </div>
                 )}
 
-                {sent.invalidation && (
+                {fund.key_drivers && fund.key_drivers.length > 0 && (
+                  <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30 mb-1.5">
+                      Key Drivers
+                    </p>
+                    <ul className="space-y-1">
+                      {fund.key_drivers.map((driver, i) => (
+                        <li key={i} className="flex gap-2 text-xs text-muted-foreground/70">
+                          <span className="shrink-0 mt-[2px]">•</span>
+                          {driver}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {fund.news && fund.news.length > 0 && (
+                  <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30 mb-1.5">
+                      Economic Events
+                    </p>
+                    <ul className="space-y-1.5">
+                      {fund.news.map((ev, i) => (
+                        <li key={i} className="text-xs text-muted-foreground/70 rounded-sm border border-surface-border bg-surface-2 px-2 py-1.5">
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <span className="font-mono font-semibold">{ev.event}</span>
+                            <span className={cn(
+                              "font-mono text-[8px] px-1 py-[2px] rounded-sm",
+                              ev.impact === "high" ? "bg-loss/20 text-loss" :
+                              ev.impact === "medium" ? "bg-yellow-400/20 text-yellow-400" :
+                              "bg-teal/20 text-teal"
+                            )}>
+                              {ev.impact.toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="text-[8px] text-muted-foreground/60">
+                            {ev.day} • {ev.currency}
+                          </div>
+                          {(ev.forecast || ev.previous) && (
+                            <div className="text-[8px] text-muted-foreground/50 mt-1">
+                              {ev.forecast && <div>F: {ev.forecast}</div>}
+                              {ev.previous && <div>P: {ev.previous}</div>}
+                            </div>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {fund.invalidation && (
                   <p className="font-mono text-[10px] text-loss/50 leading-relaxed">
-                    ⚠ {sent.invalidation}
+                    ⚠ {fund.invalidation}
                   </p>
                 )}
               </div>
             )}
           </div>
+
+          {/* Sentimental */}
+          {sent && (
+            <div className="pt-4 pb-4 border-t border-surface-border/60 space-y-3">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35">
+                Sentimental Analysis
+              </p>
+              {sent.ai_analysis && (
+                <p className="text-sm text-muted-foreground leading-relaxed">{sent.ai_analysis}</p>
+              )}
+
+              {(sent.retail_long_pct != null || sent.cot_net_position != null) && (
+                <div className="rounded-md border border-surface-border bg-surface-2 px-3 py-2.5 space-y-2">
+                  {sent.retail_long_pct != null && sent.retail_short_pct != null && (
+                    <div className="space-y-1">
+                      <div className="flex justify-between font-mono text-[9px] text-muted-foreground/40">
+                        <span>Retail Long {sent.retail_extreme && "⚠️"}</span>
+                        <span className="text-profit">{sent.retail_long_pct.toFixed(1)}%</span>
+                      </div>
+                      <div className="flex h-[3px] w-full overflow-hidden rounded-full bg-surface-3">
+                        <div className="bg-profit h-full" style={{ width: `${sent.retail_long_pct}%` }} />
+                        <div className="bg-loss h-full" style={{ width: `${sent.retail_short_pct}%` }} />
+                      </div>
+                      <div className="flex justify-between font-mono text-[9px] text-muted-foreground/40">
+                        <span>Retail Short</span>
+                        <span className="text-loss">{sent.retail_short_pct.toFixed(1)}%</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {sent.retail_signal && (
+                    <div className="border-t border-surface-border pt-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">Retail Signal</span>
+                        <span className={cn(
+                          "font-mono text-[8px] font-bold px-1.5 py-[2px] rounded-sm",
+                          sent.retail_signal.includes("bullish") ? "bg-profit/20 text-profit" :
+                          sent.retail_signal.includes("bearish") ? "bg-loss/20 text-loss" :
+                          "bg-surface-3"
+                        )}>
+                          {sent.retail_signal}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {sent.cot_net_position != null && (
+                    <div className="flex items-center justify-between border-t border-surface-border pt-2">
+                      <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">COT Net</span>
+                      <span className="font-mono text-xs tabular-nums text-foreground/70">
+                        {sent.cot_net_position.toLocaleString()}
+                      </span>
+                    </div>
+                  )}
+
+                  {sent.cot_change_week != null && (
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">
+                        COT Δ {sent.cot_trend_weeks ? `(${sent.cot_trend_weeks}w)` : ""}
+                      </span>
+                      <COTChange change={sent.cot_change_week} />
+                    </div>
+                  )}
+
+                  {sent.cot_trend_direction && (
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">COT Trend</span>
+                      <span className={cn(
+                        "font-mono text-[8px] font-semibold",
+                        sent.cot_trend_direction === "increasing" ? "text-profit" :
+                        sent.cot_trend_direction === "decreasing" ? "text-loss" :
+                        "text-teal"
+                      )}>
+                        {sent.cot_trend_direction}
+                      </span>
+                    </div>
+                  )}
+
+                  {sent.smart_money_vs_retail && (
+                    <div className="flex items-center justify-between border-t border-surface-border pt-2">
+                      <span className="font-mono text-[9px] text-muted-foreground/35 uppercase tracking-wider">Smart Money</span>
+                      <span className="font-mono text-[8px] text-muted-foreground/60">{sent.smart_money_vs_retail}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {sent.invalidation && (
+                <p className="font-mono text-[10px] text-loss/50 leading-relaxed">
+                  ⚠ {sent.invalidation}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Overall Section */}
+          {(row.overall_key_drivers?.length || row.overall_bias_invalidation_reasons?.length || row.overall_setup_scenarios) && (
+            <div className="mt-4 pt-4 border-t border-surface-border/60 space-y-4">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/35">
+                Overall Thesis
+              </p>
+
+              {row.overall_key_drivers && row.overall_key_drivers.length > 0 && (
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30 mb-1.5">
+                    Key Drivers
+                  </p>
+                  <ul className="space-y-1">
+                    {row.overall_key_drivers.map((driver, i) => (
+                      <li key={i} className="flex gap-2 text-xs text-muted-foreground/70">
+                        <span className="shrink-0 mt-[2px]">→</span>
+                        {driver}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {row.overall_bias_invalidation_reasons && row.overall_bias_invalidation_reasons.length > 0 && (
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-loss/60 mb-1.5">
+                    Invalidation Reasons
+                  </p>
+                  <ul className="space-y-1">
+                    {row.overall_bias_invalidation_reasons.map((reason, i) => (
+                      <li key={i} className="flex gap-2 text-xs text-loss/60 rounded-sm border border-loss/20 bg-loss/5 px-2 py-1">
+                        <span className="shrink-0 mt-[2px]">✕</span>
+                        {reason}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {row.overall_setup_scenarios && (
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/30 mb-2">
+                    Setup Scenarios
+                  </p>
+                  {row.overall_setup_scenarios.primary && (
+                    <div className="mb-2">
+                      <span className={cn(
+                        "font-mono text-[8px] font-bold px-2 py-1 rounded-sm",
+                        row.overall_setup_scenarios.primary === "buy" ? "bg-profit/20 text-profit" : "bg-loss/20 text-loss"
+                      )}>
+                        PRIMARY: {row.overall_setup_scenarios.primary.toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 gap-2">
+                    {row.overall_setup_scenarios.buy && (
+                      <div className="rounded-md border border-profit/20 bg-profit/5 px-3 py-2.5 space-y-1">
+                        <p className="font-mono text-[9px] text-profit font-bold uppercase tracking-wider">BUY Scenario</p>
+                        {row.overall_setup_scenarios.buy.entry_zone && (
+                          <div className="text-[9px] text-muted-foreground/70">
+                            Entry: {row.overall_setup_scenarios.buy.entry_zone[0].toFixed(4)} – {row.overall_setup_scenarios.buy.entry_zone[1].toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.buy.stop != null && (
+                          <div className="text-[9px] text-muted-foreground/70">
+                            SL: {row.overall_setup_scenarios.buy.stop.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.buy.target_1r2 != null && (
+                          <div className="text-[9px] text-profit/70">
+                            TP 1:2R: {row.overall_setup_scenarios.buy.target_1r2.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.buy.target_1r3 != null && (
+                          <div className="text-[9px] text-profit/70">
+                            TP 1:3R: {row.overall_setup_scenarios.buy.target_1r3.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.buy.narrative && (
+                          <p className="text-[9px] text-muted-foreground/60 mt-1 italic">{row.overall_setup_scenarios.buy.narrative}</p>
+                        )}
+                      </div>
+                    )}
+                    {row.overall_setup_scenarios.sell && (
+                      <div className="rounded-md border border-loss/20 bg-loss/5 px-3 py-2.5 space-y-1">
+                        <p className="font-mono text-[9px] text-loss font-bold uppercase tracking-wider">SELL Scenario</p>
+                        {row.overall_setup_scenarios.sell.entry_zone && (
+                          <div className="text-[9px] text-muted-foreground/70">
+                            Entry: {row.overall_setup_scenarios.sell.entry_zone[0].toFixed(4)} – {row.overall_setup_scenarios.sell.entry_zone[1].toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.sell.stop != null && (
+                          <div className="text-[9px] text-muted-foreground/70">
+                            SL: {row.overall_setup_scenarios.sell.stop.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.sell.target_1r2 != null && (
+                          <div className="text-[9px] text-loss/70">
+                            TP 1:2R: {row.overall_setup_scenarios.sell.target_1r2.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.sell.target_1r3 != null && (
+                          <div className="text-[9px] text-loss/70">
+                            TP 1:3R: {row.overall_setup_scenarios.sell.target_1r3.toFixed(4)}
+                          </div>
+                        )}
+                        {row.overall_setup_scenarios.sell.narrative && (
+                          <p className="text-[9px] text-muted-foreground/60 mt-1 italic">{row.overall_setup_scenarios.sell.narrative}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Confluence */}
           {conf && conf.factors_aligned && conf.factors_aligned.length > 0 && (

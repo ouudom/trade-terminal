@@ -35,10 +35,10 @@ export interface SupportResistanceLevel {
 
 export interface VolumeProfile {
   timeframe: string
-  poc: number
-  vah: number
-  val: number
-  price_vs_value_area: string
+  poc: number | null
+  vah: number | null
+  val: number | null
+  price_vs_value_area: string | null
 }
 
 export interface LiquiditySweep {
@@ -55,12 +55,13 @@ export interface Imbalance {
 }
 
 export interface OrderFlowData {
-  volume_profile?: VolumeProfile
-  cumulative_delta_4h?: string
-  delta_at_key_zone?: string
-  liquidity_sweeps?: LiquiditySweep[]
-  imbalances?: Imbalance[]
-  summary?: string
+  volume_profile?: VolumeProfile | null
+  cumulative_delta_4h?: string | null
+  delta_at_key_zone?: string | null
+  liquidity_sweeps?: LiquiditySweep[] | null
+  imbalances?: Imbalance[] | null
+  data_quality?: string | null
+  summary?: string | null
 }
 
 export interface TechnicalSection {

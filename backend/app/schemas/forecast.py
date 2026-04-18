@@ -42,10 +42,10 @@ class SupportResistanceLevel(BaseModel):
 
 class VolumeProfile(BaseModel):
     timeframe: str
-    poc: float  # Point of Control
-    vah: float  # Value Area High
-    val: float  # Value Area Low
-    price_vs_value_area: str  # above_vah | within_va | below_val
+    poc: Optional[float] = None  # Point of Control
+    vah: Optional[float] = None  # Value Area High
+    val: Optional[float] = None  # Value Area Low
+    price_vs_value_area: Optional[str] = None  # above_vah | within_va | below_val | unknown
 
 
 class LiquiditySweep(BaseModel):
@@ -63,10 +63,11 @@ class Imbalance(BaseModel):
 
 class OrderFlowData(BaseModel):
     volume_profile: Optional[VolumeProfile] = None
-    cumulative_delta_4h: Optional[str] = None  # bullish | bearish | neutral
-    delta_at_key_zone: Optional[str] = None
+    cumulative_delta_4h: Optional[str] = None  # bullish | bearish | neutral | unknown
+    delta_at_key_zone: Optional[str] = None  # bullish | bearish | neutral | unknown
     liquidity_sweeps: Optional[list[LiquiditySweep]] = None
     imbalances: Optional[list[Imbalance]] = None
+    data_quality: Optional[str] = None  # full_exchange | aggregated_otc
     summary: Optional[str] = None
 
 
