@@ -45,18 +45,18 @@ export interface UpsertValidationResponse {
 
 export class ForecastApiClient extends BaseApiClient {
   getLatestWeek(): Promise<{ week_of: string | null }> {
-    return this.get<{ week_of: string | null }>("/api/forecast/latest-week", { cache: "no-store" })
+    return this.get<{ week_of: string | null }>("/forecast/latest-week", { cache: "no-store" })
   }
 
   getWeeklyForecasts(week: string): Promise<WeeklyForecastRow[]> {
-    return this.get<WeeklyForecastRow[]>(`/api/forecast/weekly?week=${week}`, { cache: "no-store" })
+    return this.get<WeeklyForecastRow[]>(`/forecast/weekly?week=${week}`, { cache: "no-store" })
   }
 
   postWeeklyForecast(payload: WeeklyForecastPayload): Promise<UpsertForecastResponse> {
-    return this.post<UpsertForecastResponse>("/api/forecast/weekly", payload)
+    return this.post<UpsertForecastResponse>("/forecast/weekly", payload)
   }
 
   postDailyValidation(payload: DailyValidationPayload): Promise<UpsertValidationResponse> {
-    return this.post<UpsertValidationResponse>("/api/forecast/daily-validation", payload)
+    return this.post<UpsertValidationResponse>("/forecast/daily-validation", payload)
   }
 }
