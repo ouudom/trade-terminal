@@ -11,12 +11,12 @@ from sqlmodel import Session
 
 from app.core.database import get_session
 from app.services.instrument_service import InstrumentService
-from app.services.bias_service import BiasService
+from app.services.forecast_service import ForecastService
 
 
 def get_instrument_service(session: Session = Depends(get_session)) -> InstrumentService:
     return InstrumentService(session)
 
 
-def get_bias_service(session: Session = Depends(get_session)) -> BiasService:
-    return BiasService(session)
+def get_forecast_service(session: Session = Depends(get_session)) -> ForecastService:
+    return ForecastService(session)

@@ -14,7 +14,7 @@ from app.core.logging import RequestLoggingMiddleware, configure_logging
 
 from app.api.v1 import (
     instruments,
-    bias,
+    forecast,
 )
 
 
@@ -60,7 +60,7 @@ from fastapi import APIRouter
 
 api_router = APIRouter(prefix="/api")
 api_router.include_router(instruments.router)
-api_router.include_router(bias.router)
+api_router.include_router(forecast.router)
 
 app.include_router(api_router)
 
